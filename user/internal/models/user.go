@@ -6,7 +6,9 @@ import (
 	"time"
 
 	"github.com/ferjmc/api_ddd/user/pkg/types"
+	userService "github.com/ferjmc/api_ddd/user/proto/user"
 	"golang.org/x/crypto/bcrypt"
+	"google.golang.org/protobuf/types/known/timestamppb"
 
 	uuid "github.com/satori/go.uuid"
 )
@@ -109,4 +111,17 @@ func (u *User) PrepareCreate() error {
 		return err
 	}
 	return nil
+}
+
+func (r *UserResponse) ToProto() *userService.User {
+	return &userService.User{
+		UserID:    r.ID.String(),
+		FirstName: r.FirstName,
+		LastName:  r.LastName,
+		Email:     r.Email,
+		Avatar:    r.Avatar.String,
+		Role:      r.Role.ToString(),
+		CreatedAt: timestamppb.New(*r.CreatedAt),
+		UpdatedAt: timestamppb.New(*r.UpdatedAt),
+	}
 }
