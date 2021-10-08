@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/ferjmc/sessions/internal/csrf"
+	"github.com/ferjmc/api_ddd/sessions/internal/csrf"
 )
 
 const (

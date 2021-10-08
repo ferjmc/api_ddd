@@ -6,7 +6,7 @@ import (
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 
-	"github.com/ferjmc/sessions/config"
+	"github.com/ferjmc/api_ddd/sessions/config"
 )
 
 // Logger methods interface

@@ -4,8 +4,8 @@ import (
 	"context"
 	"time"
 
-	"github.com/ferjmc/user/config"
-	"github.com/ferjmc/user/pkg/logger"
+	"github.com/ferjmc/api_ddd/user/config"
+	"github.com/ferjmc/api_ddd/user/pkg/logger"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"
 )

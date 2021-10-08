@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/ferjmc/sessions/internal/models"
+	"github.com/ferjmc/api_ddd/sessions/internal/models"
 	"github.com/go-redis/redis/v8"
 	uuid "github.com/satori/go.uuid"
 )

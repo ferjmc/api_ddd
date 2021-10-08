@@ -3,12 +3,12 @@ package delivery
 import (
 	"context"
 
-	"github.com/ferjmc/sessions/internal/csrf"
-	"github.com/ferjmc/sessions/internal/models"
-	"github.com/ferjmc/sessions/internal/session"
-	"github.com/ferjmc/sessions/pkg/grpc_errors"
-	"github.com/ferjmc/sessions/pkg/logger"
-	sessionService "github.com/ferjmc/sessions/proto"
+	"github.com/ferjmc/api_ddd/sessions/internal/csrf"
+	"github.com/ferjmc/api_ddd/sessions/internal/models"
+	"github.com/ferjmc/api_ddd/sessions/internal/session"
+	"github.com/ferjmc/api_ddd/sessions/pkg/grpc_errors"
+	"github.com/ferjmc/api_ddd/sessions/pkg/logger"
+	sessionService "github.com/ferjmc/api_ddd/sessions/proto"
 	"google.golang.org/grpc/status"
 
 	uuid "github.com/satori/go.uuid"

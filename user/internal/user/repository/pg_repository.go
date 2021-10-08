@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/ferjmc/user/internal/models"
+	"github.com/ferjmc/api_ddd/user/internal/models"
 	"github.com/jackc/pgx/v4/pgxpool"
 	uuid "github.com/satori/go.uuid"
 )

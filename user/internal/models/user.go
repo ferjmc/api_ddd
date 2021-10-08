@@ -5,7 +5,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/ferjmc/user/pkg/types"
+	"github.com/ferjmc/api_ddd/user/pkg/types"
 	"golang.org/x/crypto/bcrypt"
 
 	uuid "github.com/satori/go.uuid"

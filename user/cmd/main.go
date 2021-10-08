@@ -4,10 +4,10 @@ import (
 	"log"
 	"os"
 
-	"github.com/ferjmc/user/config"
-	"github.com/ferjmc/user/internal/server"
-	"github.com/ferjmc/user/pkg/logger"
-	"github.com/ferjmc/user/pkg/postgres"
+	"github.com/ferjmc/api_ddd/user/config"
+	"github.com/ferjmc/api_ddd/user/internal/server"
+	"github.com/ferjmc/api_ddd/user/pkg/logger"
+	"github.com/ferjmc/api_ddd/user/pkg/postgres"
 )
 
 func main() {

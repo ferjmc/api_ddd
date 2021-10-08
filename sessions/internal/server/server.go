@@ -17,15 +17,15 @@ import (
 	grpcrecovery "github.com/grpc-ecosystem/go-grpc-middleware/recovery"
 	grpc_ctxtags "github.com/grpc-ecosystem/go-grpc-middleware/tags"
 
-	"github.com/ferjmc/sessions/config"
-	crfRepository "github.com/ferjmc/sessions/internal/csrf/repository"
-	csrfUseCase "github.com/ferjmc/sessions/internal/csrf/usecase"
-	"github.com/ferjmc/sessions/internal/interceptors"
-	"github.com/ferjmc/sessions/internal/session/delivery"
-	"github.com/ferjmc/sessions/internal/session/repository"
-	"github.com/ferjmc/sessions/internal/session/usecase"
-	"github.com/ferjmc/sessions/pkg/logger"
-	sessionService "github.com/ferjmc/sessions/proto"
+	"github.com/ferjmc/api_ddd/sessions/config"
+	crfRepository "github.com/ferjmc/api_ddd/sessions/internal/csrf/repository"
+	csrfUseCase "github.com/ferjmc/api_ddd/sessions/internal/csrf/usecase"
+	"github.com/ferjmc/api_ddd/sessions/internal/interceptors"
+	"github.com/ferjmc/api_ddd/sessions/internal/session/delivery"
+	"github.com/ferjmc/api_ddd/sessions/internal/session/repository"
+	"github.com/ferjmc/api_ddd/sessions/internal/session/usecase"
+	"github.com/ferjmc/api_ddd/sessions/pkg/logger"
+	sessionService "github.com/ferjmc/api_ddd/sessions/proto"
 )
 
 // Server

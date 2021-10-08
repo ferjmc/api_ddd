@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/ferjmc/user/config"
-	"github.com/ferjmc/user/pkg/logger"
+	"github.com/ferjmc/api_ddd/user/config"
+	"github.com/ferjmc/api_ddd/user/pkg/logger"
 	"github.com/jackc/pgx/v4/pgxpool"
 )
 

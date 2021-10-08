@@ -4,9 +4,9 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/ferjmc/user/internal/models"
-	"github.com/ferjmc/user/internal/user"
-	"github.com/ferjmc/user/pkg/logger"
+	"github.com/ferjmc/api_ddd/user/internal/models"
+	"github.com/ferjmc/api_ddd/user/internal/user"
+	"github.com/ferjmc/api_ddd/user/pkg/logger"
 	uuid "github.com/satori/go.uuid"
 )
 

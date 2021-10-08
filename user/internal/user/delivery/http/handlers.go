@@ -3,11 +3,11 @@ package http
 import (
 	"net/http"
 
-	"github.com/ferjmc/user/config"
-	"github.com/ferjmc/user/internal/models"
-	"github.com/ferjmc/user/internal/user"
-	httpErrors "github.com/ferjmc/user/pkg/http_errors"
-	"github.com/ferjmc/user/pkg/logger"
+	"github.com/ferjmc/api_ddd/user/config"
+	"github.com/ferjmc/api_ddd/user/internal/models"
+	"github.com/ferjmc/api_ddd/user/internal/user"
+	httpErrors "github.com/ferjmc/api_ddd/user/pkg/http_errors"
+	"github.com/ferjmc/api_ddd/user/pkg/logger"
 	"github.com/labstack/echo/v4"
 	uuid "github.com/satori/go.uuid"
 )

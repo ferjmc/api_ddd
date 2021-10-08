@@ -1,4 +1,4 @@
-module github.com/ferjmc/sessions
+module github.com/ferjmc/api_ddd/sessions
 
 go 1.16
 

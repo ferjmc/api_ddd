@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/ferjmc/user/config"
+	"github.com/ferjmc/api_ddd/user/config"
 	"github.com/jackc/pgx/v4"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"

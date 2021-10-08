@@ -3,7 +3,7 @@ package user
 import (
 	"context"
 
-	"github.com/ferjmc/user/internal/models"
+	"github.com/ferjmc/api_ddd/user/internal/models"
 	uuid "github.com/satori/go.uuid"
 )
 

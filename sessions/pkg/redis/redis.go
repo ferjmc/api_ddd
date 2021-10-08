@@ -3,7 +3,7 @@ package redis
 import (
 	"time"
 
-	"github.com/ferjmc/sessions/config"
+	"github.com/ferjmc/api_ddd/sessions/config"
 	"github.com/go-redis/redis/v8"
 )
 

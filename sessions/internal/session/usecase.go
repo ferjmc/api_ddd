@@ -3,7 +3,7 @@ package session
 import (
 	"context"
 
-	"github.com/ferjmc/sessions/internal/models"
+	"github.com/ferjmc/api_ddd/sessions/internal/models"
 	uuid "github.com/satori/go.uuid"
 )
 

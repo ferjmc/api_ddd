@@ -4,10 +4,10 @@ import (
 	"log"
 	"os"
 
-	"github.com/ferjmc/sessions/config"
-	"github.com/ferjmc/sessions/internal/server"
-	"github.com/ferjmc/sessions/pkg/logger"
-	"github.com/ferjmc/sessions/pkg/redis"
+	"github.com/ferjmc/api_ddd/sessions/config"
+	"github.com/ferjmc/api_ddd/sessions/internal/server"
+	"github.com/ferjmc/api_ddd/sessions/pkg/logger"
+	"github.com/ferjmc/api_ddd/sessions/pkg/redis"
 )
 
 func main() {

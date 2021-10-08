@@ -9,11 +9,11 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/ferjmc/user/config"
-	userHandlers "github.com/ferjmc/user/internal/user/delivery/http"
-	"github.com/ferjmc/user/internal/user/repository"
-	"github.com/ferjmc/user/internal/user/usecase"
-	"github.com/ferjmc/user/pkg/logger"
+	"github.com/ferjmc/api_ddd/user/config"
+	userHandlers "github.com/ferjmc/api_ddd/user/internal/user/delivery/http"
+	"github.com/ferjmc/api_ddd/user/internal/user/repository"
+	"github.com/ferjmc/api_ddd/user/internal/user/usecase"
+	"github.com/ferjmc/api_ddd/user/pkg/logger"
 	"github.com/jackc/pgx/v4/pgxpool"
 	"github.com/labstack/echo/v4"
 )
