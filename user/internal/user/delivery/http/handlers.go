@@ -1,13 +1,17 @@
 package http
 
 import (
+	"errors"
 	"net/http"
+	"time"
 
 	"github.com/ferjmc/api_ddd/user/config"
+	"github.com/ferjmc/api_ddd/user/internal/middlewares"
 	"github.com/ferjmc/api_ddd/user/internal/models"
 	"github.com/ferjmc/api_ddd/user/internal/user"
 	httpErrors "github.com/ferjmc/api_ddd/user/pkg/http_errors"
 	"github.com/ferjmc/api_ddd/user/pkg/logger"
+	"github.com/go-playground/validator/v10"
 	"github.com/labstack/echo/v4"
 	uuid "github.com/satori/go.uuid"
 )
@@ -18,19 +22,23 @@ const (
 )
 
 type userHandlers struct {
-	cfg    *config.Config
-	group  *echo.Group
-	userUC user.UseCase
-	logger logger.Logger
+	cfg      *config.Config
+	group    *echo.Group
+	userUC   user.UseCase
+	logger   logger.Logger
+	validate *validator.Validate
+	mw       *middlewares.MiddlewareManager
 }
 
 func NewUserHandlers(
 	group *echo.Group,
 	userUC user.UseCase,
 	logger logger.Logger,
+	validate *validator.Validate,
+	mw *middlewares.MiddlewareManager,
 	cfg *config.Config,
 ) *userHandlers {
-	return &userHandlers{group: group, userUC: userUC, logger: logger, cfg: cfg}
+	return &userHandlers{group: group, userUC: userUC, logger: logger, validate: validate, mw: mw, cfg: cfg}
 }
 
 // Register godoc
@@ -52,11 +60,30 @@ func (h *userHandlers) Register() echo.HandlerFunc {
 			return httpErrors.ErrorCtxResponse(c, err)
 		}
 
+		if err := h.validate.StructCtx(ctx, &u); err != nil {
+			h.logger.Errorf("validate.StructCtx: %v", err)
+			return httpErrors.ErrorCtxResponse(c, err)
+		}
+
 		regUser, err := h.userUC.Register(ctx, &u)
 		if err != nil {
 			h.logger.Errorf("userHandlers.Register.userUC.Register: %v", err)
 			return httpErrors.ErrorCtxResponse(c, err)
 		}
+
+		sessionID, err := h.userUC.CreateSession(ctx, regUser.ID)
+		if err != nil {
+			h.logger.Errorf("userHandlers.userUC.CreateSession: %v", err)
+			return httpErrors.ErrorCtxResponse(c, err)
+		}
+
+		c.SetCookie(&http.Cookie{
+			Name:     h.cfg.HttpServer.SessionCookieName,
+			Value:    sessionID,
+			Path:     "/",
+			HttpOnly: true,
+			Expires:  time.Now().Add(time.Duration(h.cfg.HttpServer.CookieLifeTime) * time.Minute),
+		})
 
 		return c.JSON(http.StatusCreated, regUser)
 	}
@@ -81,11 +108,30 @@ func (h *userHandlers) Login() echo.HandlerFunc {
 			return httpErrors.ErrorCtxResponse(c, err)
 		}
 
+		if err := h.validate.StructCtx(ctx, &login); err != nil {
+			h.logger.Errorf("validate.StructCtx: %v", err)
+			return httpErrors.ErrorCtxResponse(c, err)
+		}
+
 		userResponse, err := h.userUC.Login(ctx, login)
 		if err != nil {
 			h.logger.Errorf("userHandlers.userUC.Login: %v", err)
 			return httpErrors.ErrorCtxResponse(c, err)
 		}
+
+		sessionID, err := h.userUC.CreateSession(ctx, userResponse.ID)
+		if err != nil {
+			h.logger.Errorf("userHandlers.Login.CreateSession: %v", err)
+			return httpErrors.ErrorCtxResponse(c, err)
+		}
+
+		c.SetCookie(&http.Cookie{
+			Name:     h.cfg.HttpServer.SessionCookieName,
+			Value:    sessionID,
+			Path:     "/",
+			HttpOnly: true,
+			Expires:  time.Now().Add(time.Duration(h.cfg.HttpServer.CookieLifeTime) * time.Minute),
+		})
 
 		return c.JSON(http.StatusOK, userResponse)
 	}
@@ -101,6 +147,29 @@ func (h *userHandlers) Login() echo.HandlerFunc {
 // @Router /user/logout [post]
 func (h *userHandlers) Logout() echo.HandlerFunc {
 	return func(c echo.Context) error {
+		ctx := c.Request().Context()
+
+		cookie, err := c.Cookie(h.cfg.HttpServer.SessionCookieName)
+		if err != nil {
+			if errors.Is(err, http.ErrNoCookie) {
+				h.logger.Errorf("userHandlers.Logout.http.ErrNoCookie: %v", err)
+				return httpErrors.ErrorCtxResponse(c, err)
+			}
+			h.logger.Errorf("userHandlers.Logout.c.Cookie: %v", err)
+			return httpErrors.ErrorCtxResponse(c, err)
+		}
+
+		if err := h.userUC.DeleteSession(ctx, cookie.Value); err != nil {
+			h.logger.Errorf("userHandlers.userUC.DeleteSession: %v", err)
+			return httpErrors.ErrorCtxResponse(c, err)
+		}
+
+		c.SetCookie(&http.Cookie{
+			Name:   h.cfg.HttpServer.SessionCookieName,
+			Value:  "",
+			Path:   "/",
+			MaxAge: -1,
+		})
 
 		return c.NoContent(http.StatusNoContent)
 	}
@@ -116,8 +185,13 @@ func (h *userHandlers) Logout() echo.HandlerFunc {
 // @Router /user/me [get]
 func (h *userHandlers) GetMe() echo.HandlerFunc {
 	return func(c echo.Context) error {
+		ctx := c.Request().Context()
 
-		var userResponse models.UserResponse
+		userResponse, ok := ctx.Value(middlewares.RequestCtxUser{}).(*models.UserResponse)
+		if !ok {
+			h.logger.Error("invalid middleware user ctx")
+			return httpErrors.ErrorCtxResponse(c, httpErrors.WrongCredentials)
+		}
 
 		return c.JSON(http.StatusOK, userResponse)
 	}

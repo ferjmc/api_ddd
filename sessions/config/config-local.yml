@@ -51,7 +51,7 @@ postgres:
   PgDriver: pgx
 
 redis:
-  RedisAddr: localhost:6379
+  RedisAddr: 127.0.0.1:6379
   RedisPassword:
   RedisDb: 0
   RedisDefaultDB: 0
